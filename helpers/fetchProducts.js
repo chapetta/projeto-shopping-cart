@@ -3,7 +3,6 @@ const fetchProducts = async (query) => {
 
   const response = await fetch(URL_API);
   const data = await response.json();
-  console.log(data);
   return data;
 };
 
