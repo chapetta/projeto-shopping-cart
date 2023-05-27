@@ -27,8 +27,9 @@ const createProductItemElement = ({ sku, name, image }) => {
 
 const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
 
-const cartItemClickListener = (event) => {
-  // coloque seu código aqui
+const cartItemClickListener = ({ target }) => {
+  const item = target;
+  item.remove();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -65,4 +66,5 @@ const insertItemCart = async () => {
 window.onload = async () => {
   await createProductList();
   await insertItemCart();
+   cartItemClickListener();
 };
