@@ -1,7 +1,4 @@
 <h1> Boas-vindas ao repositório do Carrinho de Compras! </h1>
-<h3>
-Esse projeto testa habilidades com ES6, Higher Order Functions e testes. <br><br>
- </h3>
  
  <h4>Sobre o projeto:</h4>
  <p>
