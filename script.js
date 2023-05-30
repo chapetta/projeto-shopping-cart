@@ -1,3 +1,5 @@
+const ol = document.querySelector('.cart__items');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -30,6 +32,7 @@ const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').inn
 const cartItemClickListener = ({ target }) => {
   const item = target;
   item.remove();
+  saveCartItems(ol.innerHTML);
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -50,7 +53,6 @@ const createProductList = async () => {
 };
 
 const insertItemCart = async () => {
-  const ol = document.querySelector('.cart__items');
   const buttons = document.querySelectorAll('.item');
 
   buttons.forEach((element) => {
@@ -58,13 +60,22 @@ const insertItemCart = async () => {
       const itemId = getSkuFromProductItem(element);
       const { id, title, price } = await fetchItem(itemId);
       console.log(id, title, price);
-      ol.appendChild(createCartItemElement({ sku: id, name: title, salePrice: price }));
+      const itemCart = createCartItemElement({ sku: id, name: title, salePrice: price });
+      ol.appendChild(itemCart);
+      saveCartItems(ol.innerHTML);
     });
   });
+};
+
+const getLocalStorage = () => {
+  const reload = getSavedCartItems();
+  ol.innerHTML = reload;
+  ol.childNodes.forEach((child) => child.addEventListener('click', cartItemClickListener));
 };
 
 window.onload = async () => {
   await createProductList();
   await insertItemCart();
-   cartItemClickListener();
+  getLocalStorage();
+  cartItemClickListener();
 };
