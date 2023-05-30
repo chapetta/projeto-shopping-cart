@@ -89,6 +89,17 @@ const insertItemCart = async () => {
   });
 };
 
+const emptyCart = () => {
+const emptyButton = document.querySelector('.empty-cart');
+  emptyButton.addEventListener('click', () => {
+    ol.innerHTML = '';
+    totalValue.innerText = 'Total: $0.00';
+    totalPrice = 0;
+    saveTotalPrice('0,00');
+    saveCartItems('');
+  });
+};
+
 const getLocalStorage = () => {
   const reload = getSavedCartItems();
   ol.innerHTML = reload;
@@ -96,7 +107,6 @@ const getLocalStorage = () => {
 
   totalPrice = 0; // Reset the total price
 
-  // Iterate over each cart item and calculate the total price
   ol.childNodes.forEach((child) => {
     const priceElement = child.innerText;
     const priceRegex = /PRICE: \$(\d+(\.\d{1,2})?)/;
@@ -111,8 +121,8 @@ const getLocalStorage = () => {
 window.onload = async () => {
   await createProductList();
   await insertItemCart();
-  getLocalStorage();
-  cartItemClickListener();
+  getLocalStorage(); 
   totalPrice = getTotalPrice();
   totalValue.innerText = `Total: $${totalPrice.toFixed(2)}`;
+  emptyCart();
 };
