@@ -118,10 +118,29 @@ const getLocalStorage = () => {
   saveTotalPrice(totalPrice.toFixed(2));
 };
 
+const loading = () => {
+  const loadingElement = document.createElement('p');
+  loadingElement.innerText = 'Carregando...';
+  loadingElement.className = 'loading';
+  const loadingContainer = document.createElement('div');
+  loadingContainer.className = 'loading-container';
+  loadingContainer.appendChild(loadingElement);
+  document.body.appendChild(loadingContainer);
+};
+
+const removingLoading = () => {
+  const loadingContainer = document.querySelector('.loading-container');
+  if (loadingContainer) {
+    loadingContainer.remove();
+  }
+};
+
 window.onload = async () => {
+  loading();
   await createProductList();
   await insertItemCart();
   getLocalStorage(); 
+  removingLoading();
   totalPrice = getTotalPrice();
   totalValue.innerText = `Total: $${totalPrice.toFixed(2)}`;
   emptyCart();
